@@ -1,5 +1,3 @@
-% 可能改动的地方有： Weightmap, 以下标xxxxxxxxx部分。
-
 clc;clear;close all
 addpath ('../toolkit', '../toolkit/spec2rgb', '../toolkit/load_data')
 nameList = {'ali','green_pig','mask', 'piggy_crown', 'spongebob','pumpkin', 'dinosaur', 'piggy_horse', 'hellokitty', 'cap', 'girl', 'fox'};
