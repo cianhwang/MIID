@@ -1,4 +1,5 @@
 clc;clear;close all
+
 addpath ('../toolkit', '../toolkit/spec2rgb', '../toolkit/load_data')
 nameList = {'ali','green_pig','mask', 'piggy_crown', 'spongebob','pumpkin', 'dinosaur', 'piggy_horse', 'hellokitty', 'cap', 'girl', 'fox'};
 gpu = gpuDevice(1);
