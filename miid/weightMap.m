@@ -1,4 +1,4 @@
-function [ Wr, Wd ] = weightMap( X , alpha, beta, flag)
+function [ Wr, Wd ] = weightMap( X , alpha, beta)
 
 [row col band] = size(X);
 
@@ -35,7 +35,7 @@ end
 % Wr = im2bw(Wr, beta);
 Wr = 1./(1+exp(-alpha*(Wr - beta)));
 
-Wr = mapDenoise(Wr, flag);
+Wr = mapDenoise(Wr);
 % Wr = edge(mean(X,3), 'Canny');
 % Wr = Wr - Wr(:, [2:end, 1]);
 % figure, imshow(Wr);
@@ -68,17 +68,14 @@ end
 % 
 Wd = 1./(1+exp(-alpha*(Wd - beta)));
 
-Wd = mapDenoise(Wd, flag);
+Wd = mapDenoise(Wd);
 % Wd = edge(mean(X,3), 'Canny');
 % Wd = Wd-Wd([2:end, 1],:);
 % figure, imshow(Wd);
 
 
-function W1 = mapDenoise(W, flag)
+function W1 = mapDenoise(W)
 bwW = im2bw(W, 0.5);
 bwW=bwareaopen(bwW,15);
-if flag ==1
-bwW = bwmorph(bwW,'skel',Inf);
-end
 
 W1 = W.*bwW;
