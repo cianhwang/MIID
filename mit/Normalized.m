@@ -7,7 +7,10 @@ II = zeros(m, n, k);
 for i = 1:m
     for j = 1:n
         x(1:k,1) = I(i, j, :);
-        II(i, j, :) = (I(i, j, :)-min(x))/(max(x)-min(x));
+        map(i, j) = norm(x);
+        if norm(x) ~= 0
+        II(i, j, :) = I(i, j, :)./map(i, j);
+        end
     end
 end
 if k == 3
