@@ -1,3 +1,0 @@
-#spec2rgb
-
-## convRGB
