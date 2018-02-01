@@ -4,6 +4,7 @@ function [ X ] = BestBandMap(specImg, Jr)
 K = Chn;
 N = Row*Col;
 
+% maybe K-L divergence could also be useful here
 SSIM = zeros(K, K);
 
 for i = 1: K

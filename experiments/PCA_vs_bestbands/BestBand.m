@@ -1,17 +1,13 @@
-% 可能改动的地方有： Weightmap, 以下标xxxxxxxxx部分。
-
 clc;clear;close all
-addpath ./spec2rgb;
-addpath('E:/GroundTruth/450-700nm_118通道红头灯');
-nameList = { 'box', 'car', 'cup', 'train', 'vase', 'dinosaur', 'minion', 'plane' ,'bus','car2','vase2', 'vase3'};
-nameList2 = {};
 
-for nameIdx = 7
+addpath ('../toolkit', '../toolkit/spec2rgb', '../toolkit/load_data')
+nameList = { 'box', 'car', 'cup', 'train', 'vase', 'dinosaur', 'minion', 'plane' ,'bus','car2','vase2', 'vase3'};
+
+for nameIdx = 1:length(namelist)
     FILENAME = char(nameList(nameIdx));
-    addpath(strcat('E:/GroundTruth/450-700nm_118通道红头灯/',FILENAME));
+    addpath(strcat('../GroundTruth/450-700nm_118通道红头灯/',FILENAME));
 
 %% read spectral data
-% [specImg,startw,endw,stepw]=readHSD('E:\GroundTruth\plaster\diffuse.hsd');
 load('diffusewithill');
 load('reflectance');
 load('shadingwithill');
@@ -242,21 +238,10 @@ lambda_gc = 0;%.1;
         shadImg(:, :, k) = reshape(r(:, k), Row, Col).*mask;
     end
 
-    RGB = convRGB(gt_shad, 450, 700, (700-450)/(K-1));
-%     figure, imshow(RGB);
-    
-    RGB = convRGB(shadImg, 450, 700, (700-450)/(K-1));
-%     figure, imshow(RGB);
     score = LMSE(gt_shad,shadImg, mask)
-
-    imwrite(RGB, strcat(FILENAME, '_shading', num2str(score),'.png'));
-
+    
     derived_reflImg = specImg./(shadImg+eps);
     score = LMSE( gt_refl,derived_reflImg, mask);
-
-    RGB = convRGB(derived_reflImg, 450, 700, (700-450)/(K-1));
-%     figure, imshow(RGB, []);
-    imwrite(RGB, strcat(FILENAME, '_deriveRef', num2str(score),'.png'));
 
 %% E r-term
 
@@ -317,14 +302,7 @@ lambda_gc = 0;%.1;
         reflImage(:, :, k) = reshape(r(:, k), Row, Col).*mask;
     end
 
-    RGB = convRGB(gt_refl, 450, 700, (700-450)/(K-1));
-%     figure, imshow(RGB);
-    RGB = convRGB(reflImage, 450, 700, (700-450)/(K-1));
-%     figure, imshow(RGB);
     score2= LMSE( gt_refl,reflImage, mask)
-    imwrite(RGB, strcat(FILENAME, '_refl_', num2str(score2),'.png'));
-    %--------------------------------20180121-------------------------------
-    scoremat(nameIdx) = score2;
 
 %% iteration
 % % lambda_rc = 2;
@@ -442,5 +420,3 @@ lambda_gc = 0;%.1;
 % 
 % end
 end
-%-------------------20180121
-   save score.mat scoremat
