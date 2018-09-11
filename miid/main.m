@@ -10,6 +10,7 @@ for nameIdx = 1:length(nameList)
     addpath(strcat('../miid_dataset',FILENAME));
 
 %% read spectral data
+% To test on our dataset, you can simply replace 'readDat' function with load('.mat'), since other parameters are unused. 'diffuse.mat' denotes the input spectral image and 'shading.mat' denotes the ground truth shading.
 [specImg specImgRGB height width numSpec wl]=readDat('diffuse.dat');specImg = specImg(:, :, 1:3:119);
 [gt_shad gt_shadRGB height width numSpec wl]=readDat('shading.dat');gt_shad = gt_shad(:, :, 1:3:119);
 gt_refl =  specImg./(gt_shad+eps); 
@@ -63,7 +64,7 @@ HVec = reshape(H, [], K);
 
     idx = 1;        
     for Neighbor=1:NeighSize
-    for i = 1:1:N % ––
+    for i = 1:1:N % √ê√ê
         coor = [i+1,i+Row,i-1,i-Row];
         p = i;
             if (coor(Neighbor)<N) && (coor(Neighbor)>0)
